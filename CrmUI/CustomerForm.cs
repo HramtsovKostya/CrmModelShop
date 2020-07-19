@@ -1,4 +1,5 @@
 ﻿using CrmBL.Model;
+using System;
 using System.Windows.Forms;
 
 namespace CrmUI
@@ -12,19 +13,25 @@ namespace CrmUI
             InitializeComponent();
         }
 
-        private void ButtonOK_Click
-            (object sender, System.EventArgs e)
+        public CustomerForm(Customer customer) : this()
         {
-            Customer = new Customer()
-            {
-                Name = textBox1.Text
-            };
+            Customer = customer;
+            textBox1.Text = Customer.Name;
+        }
+
+        private void ButtonOK_Click
+            (object sender, EventArgs e)
+        {
+            var customer = Customer ?? new Customer();
+
+            customer.Name = textBox1.Text;
+            Customer = customer;
 
             Close();
         }
 
         private void ButtonCancel_Click
-            (object sender, System.EventArgs e)
+            (object sender, EventArgs e)
         {
             Close();
         }
