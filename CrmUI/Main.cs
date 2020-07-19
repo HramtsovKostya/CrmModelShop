@@ -41,7 +41,7 @@ namespace CrmUI
             catalogCheck.Show();
         }
 
-        private void CustomerAddToolStripMenuItem2_Click
+        private void CustomerAddToolStripMenuItem_Click
             (object sender, System.EventArgs e)
         {
             var form = new CustomerForm();
@@ -51,6 +51,30 @@ namespace CrmUI
                 dataBase.Customers.Add(form.Customer);
                 dataBase.SaveChanges();
             }            
+        }
+
+        private void SellerAddToolStripMenuItem_Click
+            (object sender, System.EventArgs e)
+        {
+            var form = new SellerForm();
+
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                dataBase.Sellers.Add(form.Seller);
+                dataBase.SaveChanges();
+            }
+        }
+
+        private void ProductAddToolStripMenuItem_Click
+            (object sender, System.EventArgs e)
+        {
+            var form = new ProductForm();
+
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                dataBase.Products.Add(form.Product);
+                dataBase.SaveChanges();
+            }
         }
     }
 }

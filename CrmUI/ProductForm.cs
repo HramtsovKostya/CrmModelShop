@@ -1,13 +1,14 @@
 ﻿using CrmBL.Model;
+using System;
 using System.Windows.Forms;
 
 namespace CrmUI
 {
-    public partial class CustomerForm : Form
+    public partial class ProductForm : Form
     {
-        public Customer Customer { get; set; }
+        public Product Product { get; set; }
 
-        public CustomerForm()
+        public ProductForm()
         {
             InitializeComponent();
         }
@@ -15,9 +16,11 @@ namespace CrmUI
         private void ButtonOK_Click
             (object sender, System.EventArgs e)
         {
-            Customer = new Customer()
+            Product = new Product()
             {
-                Name = textBox1.Text
+                Name = textBox1.Text,
+                Price = numericUpDown1.Value,
+                Count = Convert.ToInt32(numericUpDown2.Value)
             };
 
             Close();

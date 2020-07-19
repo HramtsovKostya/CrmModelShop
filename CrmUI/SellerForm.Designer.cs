@@ -1,6 +1,6 @@
 ﻿namespace CrmUI
 {
-    partial class CustomerForm
+    partial class SellerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -20,7 +20,12 @@
             base.Dispose(disposing);
         }
 
-        #region
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
         private void InitializeComponent()
         {
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -71,7 +76,7 @@
             this.ButtonCancel.UseVisualStyleBackColor = true;
             this.ButtonCancel.Click += new System.EventHandler(this.ButtonCancel_Click);
             // 
-            // CustomerForm
+            // SellerForm
             // 
             this.AcceptButton = this.ButtonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -82,8 +87,8 @@
             this.Controls.Add(this.ButtonOK);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
-            this.Name = "CustomerForm";
-            this.Text = "CustomerForm";
+            this.Name = "SellerForm";
+            this.Text = "SellerForm";
             this.ResumeLayout(false);
             this.PerformLayout();
 

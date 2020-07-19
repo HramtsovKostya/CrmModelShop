@@ -3,11 +3,11 @@ using System.Windows.Forms;
 
 namespace CrmUI
 {
-    public partial class CustomerForm : Form
+    public partial class SellerForm : Form
     {
-        public Customer Customer { get; set; }
+        public Seller Seller { get; set; }
 
-        public CustomerForm()
+        public SellerForm()
         {
             InitializeComponent();
         }
@@ -15,7 +15,7 @@ namespace CrmUI
         private void ButtonOK_Click
             (object sender, System.EventArgs e)
         {
-            Customer = new Customer()
+            Seller = new Seller()
             {
                 Name = textBox1.Text
             };
