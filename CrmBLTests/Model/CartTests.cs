@@ -33,6 +33,7 @@ namespace CrmBL.Model.Tests
             };
 
             var cart = new Cart(customer);
+
             var expectedResult = new List<Product>()
             { 
                 product1,
