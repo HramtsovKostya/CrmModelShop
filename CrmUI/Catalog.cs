@@ -105,20 +105,6 @@ namespace CrmUI
         }
 
         private void ButtonDelete_Click
-            (object sender, EventArgs e)
-        {
-            if (typeof(T) == typeof(Product))
-            {
-
-            }
-            else if (typeof(T) == typeof(Seller))
-            {
-
-            }
-            else if (typeof(T) == typeof(Customer))
-            {
-
-            }
-        }
+            (object sender, EventArgs e) { }
     }
 }

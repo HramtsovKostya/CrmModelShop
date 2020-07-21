@@ -48,7 +48,7 @@ namespace CrmBL.Model
                     ProductId = Products.Count + 1,
                     Name = GetRandomText(),
                     Count = rnd.Next(10, 1000),
-                    Price = Convert.ToDecimal(rnd.Next(5, 100000) + rnd.NextDouble())
+                    Price = Convert.ToDecimal(rnd.Next(5, 1000) + rnd.NextDouble())
                 };
                 Products.Add(product);
             }
@@ -60,7 +60,7 @@ namespace CrmBL.Model
             var count = rnd.Next(min, max);
 
             for (int i = 0; i < count; i++)
-                result.Add(Products[rnd.Next(Products.Count - 1)]);
+                result.Add(Products[rnd.Next(Products.Count)]);
             return result;
         }
 

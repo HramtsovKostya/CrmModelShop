@@ -12,17 +12,16 @@ namespace CrmUI
 
         public CustomerForm(Customer customer) : this()
         {
-            Customer = customer;
+            Customer = customer ?? new Customer();
             textBox1.Text = Customer.Name;
         }
 
         private void ButtonOK_Click
             (object sender, EventArgs e)
         {
-            var customer = Customer ?? new Customer();
-
-            customer.Name = textBox1.Text;
-            Customer = customer; Close();
+            Customer = Customer ?? new Customer();
+            Customer.Name = textBox1.Text;
+            Close();
         }
 
         private void ButtonCancel_Click

@@ -19,10 +19,9 @@ namespace CrmUI
         private void ButtonOK_Click
             (object sender, EventArgs e)
         {
-            var seller = Seller ?? new Seller();
-
-            seller.Name = textBox1.Text;
-            Seller = seller; Close();
+            Seller = Seller ?? new Seller();
+            Seller.Name = textBox1.Text;
+            Close();
         }
 
         private void ButtonCancel_Click
