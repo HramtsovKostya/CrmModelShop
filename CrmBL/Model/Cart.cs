@@ -6,9 +6,7 @@ namespace CrmBL.Model
     public class Cart : IEnumerable<Product>
     {
         public Customer Customer { get; set; }
-
         public Dictionary<Product, int> Products { get; set; }
-
         public Cart(Customer customer)
         {
             Customer = customer;
@@ -18,41 +16,24 @@ namespace CrmBL.Model
         public void Add(Product product)
         {
             if (Products.TryGetValue(product, out int count))
-            {
-                Products[product] = ++count;
-            }
-            else
-            {
-                Products.Add(product, 1);
-            }
+                Products[product] = ++count;            
+            else Products.Add(product, 1);            
         }
 
         public List<Product> GetAllProducts()
         {
             var result = new List<Product>();
-
-            foreach (var item in this)
-            {
-                result.Add(item);
-            }
-
+            foreach (var item in this) result.Add(item);
             return result;
         }
 
         public IEnumerator<Product> GetEnumerator()
         {
             foreach (var product in Products.Keys)
-            {
                 for (int i = 0; i < Products[product]; i++)
-                {
-                    yield return product;
-                }
-            }
-        }        
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
+                    yield return product;               
         }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

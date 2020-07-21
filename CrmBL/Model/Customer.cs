@@ -5,14 +5,8 @@ namespace CrmBL.Model
     public class Customer
     {
         public int CustomerId { get; set; }
-
         public string Name { get; set; }
-
-        public virtual ICollection<Check> Ckecks { get; set; } 
-
-        public override string ToString()
-        {
-            return Name;
-        }
+        public virtual ICollection<Check> Ckecks { get; set; }
+        public override string ToString() => Name;
     }
 }

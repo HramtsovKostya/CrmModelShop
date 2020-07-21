@@ -8,10 +8,7 @@ namespace CrmUI
     {
         public Customer Customer { get; set; }
 
-        public CustomerForm()
-        {
-            InitializeComponent();
-        }
+        public CustomerForm() => InitializeComponent();
 
         public CustomerForm(Customer customer) : this()
         {
@@ -25,15 +22,10 @@ namespace CrmUI
             var customer = Customer ?? new Customer();
 
             customer.Name = textBox1.Text;
-            Customer = customer;
-
-            Close();
+            Customer = customer; Close();
         }
 
         private void ButtonCancel_Click
-            (object sender, EventArgs e)
-        {
-            Close();
-        }
+            (object sender, EventArgs e) => Close();
     }
 }

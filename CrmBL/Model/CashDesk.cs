@@ -8,23 +8,19 @@ namespace CrmBL.Model
         private readonly CrmContext dbContext;
 
         public int Number { get; set; }
-
         public Seller Seller { get; set; }
-
         public Queue<Cart> Queue { get; set; }
-
         public int MaxQueueLength { get; set; }
-
         public int ExitCustomer { get; set; }
-
         public bool IsModel { get; set; }
-
         public int Count => Queue.Count;
+
+        public event EventHandler<Check> CheckClosed;
 
         public CashDesk(int number, Seller seller)
         {
             dbContext = new CrmContext();
-            Queue = new Queue<Cart>();
+            Queue = new Queue<Cart>();            
             Number = number;
             Seller = seller;            
             IsModel = true;
@@ -33,13 +29,8 @@ namespace CrmBL.Model
         public void Enqueue(Cart cart)
         {
             if (Queue.Count <= MaxQueueLength)
-            {
-                Queue.Enqueue(cart);
-            }
-            else
-            {
-                ExitCustomer++;
-            }
+                Queue.Enqueue(cart);            
+            else ExitCustomer++;
         }
 
         public decimal Dequeue()
@@ -65,10 +56,7 @@ namespace CrmBL.Model
                     dbContext.Checks.Add(check);
                     dbContext.SaveChanges();
                 }
-                else
-                {
-                    check.CheckId = 0;
-                }
+                else check.CheckId = 0;               
 
                 var sells = new List<Sell>();
 
@@ -85,21 +73,16 @@ namespace CrmBL.Model
                         };
                     
                         sells.Add(sell);
-
-                        if (!IsModel)
-                        {
-                            dbContext.Sells.Add(sell);
-                        }
+                        if (!IsModel) dbContext.Sells.Add(sell);
 
                         product.Count--;
                         sum += product.Price;
                     }
                 }
+                check.Price = sum;
+                if (!IsModel) dbContext.SaveChanges();
 
-                if (!IsModel)
-                {
-                    dbContext.SaveChanges();
-                }                
+                CheckClosed?.Invoke(this, check);
             }
             return sum;
         }

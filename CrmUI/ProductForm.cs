@@ -8,10 +8,7 @@ namespace CrmUI
     {
         public Product Product { get; set; }
 
-        public ProductForm()
-        {
-            InitializeComponent();
-        }
+        public ProductForm() => InitializeComponent();
 
         public ProductForm(Product product) : this()
         {
@@ -29,15 +26,10 @@ namespace CrmUI
             product.Name = textBox1.Text;
             product.Price = numericUpDown1.Value;
             product.Count = Convert.ToInt32(numericUpDown2.Value);
-            Product = product;
-
-            Close();
+            Product = product; Close();
         }
 
         private void ButtonCancel_Click
-            (object sender, EventArgs e)
-        {
-            Close();
-        }
+            (object sender, EventArgs e) => Close();
     }
 }

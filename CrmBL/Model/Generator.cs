@@ -7,73 +7,51 @@ namespace CrmBL.Model
     {
         private readonly Random rnd = new Random();
 
-        public List<Customer> Customers { get; set; }
+        public List<Customer> Customers { get; set; } = new List<Customer>();
+        public List<Seller> Sellers { get; set; } = new List<Seller>();
+        public List<Product> Products { get; set; } = new List<Product>();
 
-        public List<Product> Products { get; set; }
+        public Generator() { }
 
-        public List<Seller> Sellers { get; set; }
-
-        public Generator()
+        public void GetNewCustomers(int count)
         {
-            Customers = new List<Customer>();
-            Products = new List<Product>();
-            Sellers = new List<Seller>();
-        }
-
-        public List<Customer> GetNewCustomers(int count)
-        {
-            var result = new List<Customer>();
-
             for (int i = 0; i < count; i++)
             {
                 var customer = new Customer()
                 {
-                    CustomerId = Customers.Count,
+                    CustomerId = Customers.Count + 1,
                     Name = GetRandomText()
                 };
-
                 Customers.Add(customer);
-                result.Add(customer);
             }
-            return result;
         }
 
-        public List<Seller> GetNewSellers(int count)
+        public void GetNewSellers(int count)
         {
-            var result = new List<Seller>();
-
             for (int i = 0; i < count; i++)
             {
                 var seller = new Seller()
                 {
-                    SellerId = Sellers.Count,
+                    SellerId = Sellers.Count + 1,
                     Name = GetRandomText()
                 };
-
                 Sellers.Add(seller);
-                result.Add(seller);
             }
-            return result;
         }
 
-        public List<Product> GetNewProducts(int count)
+        public void GetNewProducts(int count)
         {
-            var result = new List<Product>();
-
             for (int i = 0; i < count; i++)
             {
                 var product = new Product()
                 {
-                    ProductId = Products.Count,
+                    ProductId = Products.Count + 1,
                     Name = GetRandomText(),
                     Count = rnd.Next(10, 1000),
                     Price = Convert.ToDecimal(rnd.Next(5, 100000) + rnd.NextDouble())
                 };
-
-                Products.Add(product);  
-                result.Add(product);
+                Products.Add(product);
             }
-            return result;
         }
 
         public List<Product> GetRandomProducts(int min, int max)
@@ -82,11 +60,7 @@ namespace CrmBL.Model
             var count = rnd.Next(min, max);
 
             for (int i = 0; i < count; i++)
-            {
-                var index = rnd.Next(Products.Count - 1);
-                result.Add(Products[index]);
-            }
-
+                result.Add(Products[rnd.Next(Products.Count - 1)]);
             return result;
         }
 

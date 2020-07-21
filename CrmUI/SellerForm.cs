@@ -8,10 +8,7 @@ namespace CrmUI
     {
         public Seller Seller { get; set; }
 
-        public SellerForm()
-        {
-            InitializeComponent();
-        }
+        public SellerForm() => InitializeComponent();
 
         public SellerForm(Seller seller) : this()
         {
@@ -25,15 +22,10 @@ namespace CrmUI
             var seller = Seller ?? new Seller();
 
             seller.Name = textBox1.Text;
-            Seller = seller;
-
-            Close();
+            Seller = seller; Close();
         }
 
         private void ButtonCancel_Click
-            (object sender, EventArgs e)
-        {
-            Close();
-        }
+            (object sender, EventArgs e) => Close();
     }
 }
