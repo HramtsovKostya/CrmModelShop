@@ -8,11 +8,16 @@ namespace CrmBL.Model
     {
         private readonly Random rnd = new Random();
 
-        public List<Customer> Customers { get; set; } = new List<Customer>();
-        public List<Seller> Sellers { get; set; } = new List<Seller>();
-        public List<Product> Products { get; set; } = new List<Product>();
+        public List<Customer> Customers { get; } 
+        public List<Seller> Sellers { get; } 
+        public List<Product> Products { get; } 
 
-        public Generator() { }
+        public Generator()
+        {
+            Customers = new List<Customer>();
+            Sellers = new List<Seller>();
+            Products = new List<Product>();
+        }
 
         public void GetNewCustomers(int count)
         {

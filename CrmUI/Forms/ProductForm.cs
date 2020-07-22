@@ -6,7 +6,7 @@ namespace CrmUI.Forms
 {
     public partial class ProductForm : Form
     {
-        public Product Product { get; set; }
+        public Product Product { get; private set; }
 
         public ProductForm() => InitializeComponent();
 
@@ -18,8 +18,7 @@ namespace CrmUI.Forms
             numericUpDown2.Value = Product.Count;
         }
 
-        private void ButtonOK_Click
-            (object sender, EventArgs e)
+        private void ButtonOK_Click(object sender, EventArgs e)
         {
             Product = Product ?? new Product();
             Product.Name = textBox1.Text;
@@ -28,7 +27,6 @@ namespace CrmUI.Forms
             Close();
         }
 
-        private void ButtonCancel_Click
-            (object sender, EventArgs e) => Close();
+        private void ButtonCancel_Click(object sender, EventArgs e) => Close();
     }
 }

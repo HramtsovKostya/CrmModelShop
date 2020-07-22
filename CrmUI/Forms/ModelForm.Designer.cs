@@ -121,9 +121,12 @@
             this.Controls.Add(this.CashDeskSpeed);
             this.Controls.Add(this.CustomerSpeed);
             this.Controls.Add(this.ButtonStart);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(818, 497);
+            this.MinimumSize = new System.Drawing.Size(818, 497);
             this.Name = "ModelForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ModelForm";
+            this.Text = "Моделирование";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ModelForm_FormClosing);
             this.Load += new System.EventHandler(this.ModelForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.CustomerSpeed)).EndInit();

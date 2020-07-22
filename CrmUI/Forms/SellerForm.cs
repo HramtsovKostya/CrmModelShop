@@ -6,7 +6,7 @@ namespace CrmUI.Forms
 {
     public partial class SellerForm : Form
     {
-        public Seller Seller { get; set; }
+        public Seller Seller { get; private set; }
 
         public SellerForm() => InitializeComponent();
 
@@ -16,15 +16,13 @@ namespace CrmUI.Forms
             textBox1.Text = Seller.Name;
         }
 
-        private void ButtonOK_Click
-            (object sender, EventArgs e)
+        private void ButtonOK_Click(object sender, EventArgs e)
         {
             Seller = Seller ?? new Seller();
             Seller.Name = textBox1.Text;
             Close();
         }
 
-        private void ButtonCancel_Click
-            (object sender, EventArgs e) => Close();
+        private void ButtonCancel_Click(object sender, EventArgs e) => Close();
     }
 }

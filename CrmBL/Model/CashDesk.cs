@@ -8,9 +8,9 @@ namespace CrmBL.Model
     {
         private readonly CrmContext dbContext;
 
-        public int Number { get; set; }
-        public Seller Seller { get; set; }
-        public Queue<Cart> Queue { get; set; }
+        public int Number { get; }
+        public Seller Seller { get; }
+        public Queue<Cart> Queue { get; }
         public int MaxQueueLength { get; set; }
         public int ExitCustomer { get; set; }
         public bool IsModel { get; set; }
@@ -39,7 +39,7 @@ namespace CrmBL.Model
         {
             if (Queue.Count == 0) return 0;
 
-            decimal sum = 0;
+            decimal fullPrice = 0;
             var cart = Queue.Dequeue();
 
             if (cart != null)
@@ -78,20 +78,17 @@ namespace CrmBL.Model
                         if (!IsModel) dbContext.Sells.Add(sell);
 
                         product.Count--;
-                        sum += product.Price;
+                        fullPrice += product.Price;
                     }
                 }
-                check.Price = sum;
+                check.Price = fullPrice;
                 if (!IsModel) dbContext.SaveChanges();
 
                 CheckClosed?.Invoke(this, check);
             }
-            return sum;
+            return fullPrice;
         }
 
-        public override string ToString()
-        {
-            return $"Касса №{Number}";
-        }
+        public override string ToString() => $"Касса №{Number}";
     }
 }

@@ -53,9 +53,7 @@ namespace CrmBL.Model.Tests
             Assert.AreEqual(expectedResult.Count, cartResult.Count);
 
             for (int i = 0; i < expectedResult.Count; i++)
-            {
                 Assert.AreEqual(expectedResult[i], cartResult[i]);
-            }
         }
     }
 }

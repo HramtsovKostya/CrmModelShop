@@ -83,9 +83,12 @@
             this.Controls.Add(this.ButtonEdit);
             this.Controls.Add(this.ButtonAdd);
             this.Controls.Add(this.dataGridView);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(818, 497);
+            this.MinimumSize = new System.Drawing.Size(818, 497);
             this.Name = "Catalog";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Catalog";
+            this.Text = "База данных";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.ResumeLayout(false);
 

@@ -14,13 +14,16 @@ namespace CrmBL.Model
         private readonly List<Task> tasks = new List<Task>();
         private bool isWorking = false;
 
-        public List<CashDesk> CashDesks { get; set; } = new List<CashDesk>();
-        public Queue<Seller> Sellers { get; set; } = new Queue<Seller>();
+        public List<CashDesk> CashDesks { get; } 
+        public Queue<Seller> Sellers { get; }
         public int CustomerSpeed { get; set; } = 100;
         public int CashDeskSpeed { get; set; } = 100;
 
         public ShopModel()
         {
+            CashDesks = new List<CashDesk>();
+            Sellers = new Queue<Seller>();
+
             Generator.GetNewSellers(20);
             Generator.GetNewProducts(1000);
 

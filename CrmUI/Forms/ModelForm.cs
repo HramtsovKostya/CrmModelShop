@@ -10,8 +10,7 @@ namespace CrmUI.Forms
 
         public ModelForm() => InitializeComponent();
 
-        private void ButtonStart_Click
-            (object sender, System.EventArgs e)
+        private void ButtonStart_Click(object sender, System.EventArgs e)
         {
             var CashDesks = new List<CashBoxView>();
 
@@ -33,24 +32,20 @@ namespace CrmUI.Forms
             Controls.Add(box.LeaveCustomersCount);
         }
 
-        private void ModelForm_FormClosing
-            (object sender, FormClosingEventArgs e) => model.Stop();
+        private void ModelForm_FormClosing(object sender, FormClosingEventArgs e) => model.Stop();
 
-        private void ModelForm_Load
-            (object sender, System.EventArgs e)
+        private void ModelForm_Load(object sender, System.EventArgs e)
         {
             CustomerSpeed.Value = model.CustomerSpeed;
             CashDeskSpeed.Value = model.CashDeskSpeed;
         }
 
-        private void NumericUpDown1_ValueChanged
-            (object sender, System.EventArgs e)
+        private void NumericUpDown1_ValueChanged(object sender, System.EventArgs e)
         {
             model.CustomerSpeed = (int)CustomerSpeed.Value;
         }
 
-        private void NumericUpDown2_ValueChanged
-            (object sender, System.EventArgs e)
+        private void NumericUpDown2_ValueChanged(object sender, System.EventArgs e)
         {
             model.CashDeskSpeed = (int)CashDeskSpeed.Value;
         }

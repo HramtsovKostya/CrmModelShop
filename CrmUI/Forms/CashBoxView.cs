@@ -8,10 +8,10 @@ namespace CrmUI.Forms
 {
     public class CashBoxView
     {
-        public Label CashDeskName { get; set; }
-        public NumericUpDown FullPrice { get; set; }
-        public ProgressBar QueueLength { get; set; }
-        public Label LeaveCustomersCount { get; set; }
+        public Label CashDeskName { get; private set; }
+        public NumericUpDown FullPrice { get; private set; }
+        public ProgressBar QueueLength { get; private set; }
+        public Label LeaveCustomersCount { get; private set; }
 
         private readonly CashDesk cashDesk;
 
@@ -80,7 +80,7 @@ namespace CrmUI.Forms
 
         private void CashDesk_CheckClosed(object sender, Check e)
         {
-            FullPrice.Invoke((Action)delegate 
+            FullPrice?.Invoke((Action)delegate 
             {
                 FullPrice.Value += e.Price;
                 QueueLength.Value = cashDesk.Count;

@@ -1,82 +1,58 @@
-﻿using System;
+﻿using CrmBL.DataBase;
+using CrmBL.Model;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CrmBL.DataBase;
-using CrmBL.Model;
 
 namespace CrmUI.Forms
 {
-    public partial class Main : Form
+    public partial class MainForm : Form
     {
+        private readonly Random rnd;
         private readonly CrmContext dbContext;
-        private readonly CashDesk cashDesk;
-        private Cart cart;
+        private CashDesk cashDesk;
+        private Cart cusrtomerCart;
         private Customer customer;
 
-        public Main()
+        public MainForm()
         {
             InitializeComponent();
+            rnd = new Random(DateTime.Now.Millisecond);
             dbContext = new CrmContext();            
-            cart = new Cart(customer);
-
-            var seller = dbContext.Sellers.FirstOrDefault();
-            cashDesk = new CashDesk(1, seller, dbContext) { IsModel = false };
+            cusrtomerCart = new Cart(customer);  
         }
 
-        private void ProductToolStripMenuItem_Click
-            (object sender, EventArgs e) => FormShow<Product>();
-
-        private void SellerToolStripMenuItem_Click
-            (object sender, EventArgs e) => FormShow<Seller>();
-
-        private void CustomerToolStripMenuItem_Click
-            (object sender, EventArgs e) => FormShow<Customer>();
-
-        private void CheckToolStripMenuItem_Click
-            (object sender, EventArgs e) => FormShow<Check>();
-
-        private void FormShow<T>() where T : class 
-            => new Catalog<T>(dbContext).Show();
-
-        private void CustomerAddToolStripMenuItem_Click
-            (object sender, EventArgs e)
+        private void ProductsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new CustomerForm();
-
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                dbContext.Customers.Add(form.Customer);
-                dbContext.SaveChanges();
-            }            
+            FormShow<Product>("Список товаров");
         }
 
-        private void SellerAddToolStripMenuItem_Click
-            (object sender, EventArgs e)
+        private void SellersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new SellerForm();
-
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                dbContext.Sellers.Add(form.Seller);
-                dbContext.SaveChanges();
-            }
+            FormShow<Seller>("Список продавцов");
         }
 
-        private void ProductAddToolStripMenuItem_Click
-            (object sender, EventArgs e)
+        private void CustomersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var form = new ProductForm();
-
-            if (form.ShowDialog() == DialogResult.OK)
-            {
-                dbContext.Products.Add(form.Product);
-                dbContext.SaveChanges();
-            }
+            FormShow<Customer>("Список покупателей");
         }
 
-        private void ModelingToolStripMenuItem_Click
-            (object sender, EventArgs e) => new ModelForm().Show();
+        private void ChecksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormShow<Check>("Список чеков");
+        }
+
+        private void FormShow<T>(string caption) where T : class
+        {
+            var form = new Catalog<T>(dbContext) { Text = caption };
+            form.Show();
+        }
+
+        private void ModelingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new ModelForm().Show();
+        }
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -91,7 +67,7 @@ namespace CrmUI.Forms
         {
             if (ProductsList.SelectedItem is Product product)
             {
-                cart.Add(product);
+                cusrtomerCart.Add(product);
                 CartList.Items.Add(product);
                 UpdateLists();
                 ButtonPay_Activate();
@@ -100,8 +76,7 @@ namespace CrmUI.Forms
 
         private void ButtonPay_Activate()
         {
-            if (CartList.Items.Count != 0)
-                ButtonPay.Enabled = true;           
+            if (CartList.Items.Count != 0) ButtonPay.Enabled = true;           
             else ButtonPay.Enabled = false;           
         }
 
@@ -109,7 +84,7 @@ namespace CrmUI.Forms
         {
             if (CartList.SelectedItem is Product product)
             {
-                cart.Remove(product);
+                cusrtomerCart.Remove(product);
                 CartList.Items.Remove(product);
                 UpdateLists();
                 ButtonPay_Activate();
@@ -119,12 +94,16 @@ namespace CrmUI.Forms
         private void UpdateLists()
         {
             CartList.Items.Clear();
-            CartList.Items.AddRange(cart.GetAllProducts().ToArray());
-            FullPriceLabel.Text = $"Итого: {cart.FullPrice} руб.";
+            CartList.Items.AddRange(cusrtomerCart.GetAllProducts().ToArray());
+            SetFullPrice();
         }
 
-        private void EnterLabel_LinkClicked
-            (object sender, LinkLabelLinkClickedEventArgs e)
+        private void SetFullPrice()
+        {
+            FullPriceLabel.Text = $"Итого: {cusrtomerCart.FullPrice} руб.";
+        }
+
+        private void EnterLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             var form = new LoginForm();
 
@@ -144,8 +123,8 @@ namespace CrmUI.Forms
                     customer = form.Customer;
                 }
 
-                cart.Customer = customer;
-                EnterLabel.Text = $"Здравствуй, {customer}";
+                cusrtomerCart.Customer = customer;
+                EnterLabel.Text = $"Здравствуйте, {customer}";
             } 
         }
 
@@ -153,10 +132,14 @@ namespace CrmUI.Forms
         {
             if (customer != null)
             {
-                cashDesk.Enqueue(cart);
+                cashDesk = new CashDesk(1, SetRandomSeller(), dbContext) { IsModel = false };
+
+                cashDesk.Enqueue(cusrtomerCart);
                 var price = cashDesk.Dequeue();
                 CartList.Items.Clear();
-                cart = new Cart(customer);
+                cusrtomerCart = new Cart(customer);
+                SetFullPrice();
+                ButtonPay.Enabled = false;
 
                 MessageBox.Show("Покупка выполнена успешно." +
                     $" Сумма: {price} руб.", "Покупка выполнена",
@@ -167,6 +150,14 @@ namespace CrmUI.Forms
                 MessageBox.Show("Авторизуйтесь, пожалуйста!", "Ошибка авторизации",
                      MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private Seller SetRandomSeller()
+        {
+            var randomSellerId = rnd.Next(1, dbContext.Sellers.Count() + 1);
+            var seller = dbContext.Sellers.FirstOrDefault(s => s.SellerId == randomSellerId);
+
+            return seller;
         }
     }
 }

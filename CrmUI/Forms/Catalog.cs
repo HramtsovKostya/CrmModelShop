@@ -5,8 +5,7 @@ using System.Windows.Forms;
 
 namespace CrmUI.Forms
 {
-    public partial class Catalog<T> : Form
-        where T : class
+    public partial class Catalog<T> : Form where T : class
     {
         private readonly CrmContext dbContext;
         private readonly DbSet<T> dbSet;
@@ -21,6 +20,7 @@ namespace CrmUI.Forms
             
             dbSet.Load();
             dataGridView.DataSource = dbSet.Local.ToBindingList();
+            DataGrid_CheckData();
 
             if (typeof(T) == typeof(Check))
             {
@@ -29,8 +29,7 @@ namespace CrmUI.Forms
             }
         }
 
-        private void ButtonAdd_Click
-            (object sender, EventArgs e)
+        private void ButtonAdd_Click(object sender, EventArgs e)
         {
             if (typeof(T) == typeof(Product))
             {
@@ -64,53 +63,83 @@ namespace CrmUI.Forms
             }
         }
 
-        private void ButtonEdit_Click
-            (object sender, EventArgs e)
+        private void ButtonEdit_Click(object sender, EventArgs e)
         {
-            var id = dataGridView.SelectedRows[0].Cells[0].Value;
-
             if (typeof(T) == typeof(Product))
             {
-                if (dbSet.Find(id) is Product product)
-                {
-                    var form = new ProductForm(product);
+                if (dbSet.Find(GetId()) is Product product)
+                    DataBase_EditData(new ProductForm(product));
+            }
+            else if (typeof(T) == typeof(Seller))
+            {
+                if (dbSet.Find(GetId()) is Seller seller)
+                    DataBase_EditData(new SellerForm(seller));              
+            }
+            else if (typeof(T) == typeof(Customer))
+            {
+                if (dbSet.Find(GetId()) is Customer customer)
+                    DataBase_EditData(new CustomerForm(customer)); 
+            }
+        }
 
-                    if (form.ShowDialog() == DialogResult.OK)
-                    {
-                        dbContext.SaveChanges();
-                        dataGridView.Refresh();
-                    }
+        private void DataBase_EditData(Form form)
+        {
+            if (form.ShowDialog() == DialogResult.OK) 
+                DataBase_SaveChanges();
+        }
+
+        private void ButtonDelete_Click(object sender, EventArgs e)
+        {
+            if (typeof(T) == typeof(Product))
+            {
+                if (dbSet.Find(GetId()) is Product product)
+                {
+                    dbContext.Products.Remove(product);
+                    DataBase_SaveChanges();
                 }
             }
             else if (typeof(T) == typeof(Seller))
             {
-                if (dbSet.Find(id) is Seller seller)
+                if (dbSet.Find(GetId()) is Seller seller)
                 {
-                    var form = new SellerForm(seller);
-
-                    if (form.ShowDialog() == DialogResult.OK)
-                    {
-                        dbContext.SaveChanges();
-                        dataGridView.Refresh();
-                    }
+                    dbContext.Sellers.Remove(seller);
+                    DataBase_SaveChanges();
                 }
             }
             else if (typeof(T) == typeof(Customer))
             {
-                if (dbSet.Find(id) is Customer customer)
+                if (dbSet.Find(GetId()) is Customer customer)
                 {
-                    var form = new CustomerForm(customer);
-
-                    if (form.ShowDialog() == DialogResult.OK)
-                    {
-                        dbContext.SaveChanges();
-                        dataGridView.Refresh();
-                    }
+                    dbContext.Customers.Remove(customer);
+                    DataBase_SaveChanges();
                 }
             }
+            else if (typeof(T) == typeof(Check))
+            {
+                if (dbSet.Find(GetId()) is Check check)
+                {
+                    dbContext.Checks.Remove(check);
+                    DataBase_SaveChanges();
+                }
+            }
+            DataGrid_CheckData();
         }
 
-        private void ButtonDelete_Click
-            (object sender, EventArgs e) { }
+        private void DataBase_SaveChanges()
+        {
+            dbContext.SaveChanges();
+            dataGridView.Refresh();
+        }
+
+        private void DataGrid_CheckData()
+        {
+            if (dataGridView.Rows.Count > 0) ButtonDelete.Enabled = true;
+            else ButtonDelete.Enabled = false;
+        }
+
+        private object GetId()
+        {
+            return dataGridView.SelectedRows[0].Cells[0].Value;
+        }
     }
 }

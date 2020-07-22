@@ -8,9 +8,8 @@ namespace CrmBL.Model
     public class Cart : IEnumerable<Product>
     {
         public Customer Customer { get; set; }
-        public Dictionary<Product, int> Products { get; set; }
-        public decimal FullPrice 
-            => GetAllProducts().Sum(p => p.Price);
+        public Dictionary<Product, int> Products { get; private set; }
+        public decimal FullPrice => GetAllProducts().Sum(p => p.Price);
 
         public Cart(Customer customer)
         {
@@ -28,8 +27,10 @@ namespace CrmBL.Model
         public void Remove(Product product)
         {
             if (Products.TryGetValue(product, out int count))
-                Products[product] = --count;
-            else Products.Remove(product);
+            {
+                if (count > 1) Products[product] = --count;
+                else Products.Remove(product);
+            }    
         }
 
         public List<Product> GetAllProducts()

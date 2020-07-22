@@ -5,7 +5,7 @@ namespace CrmUI.Forms
 {
     public partial class LoginForm : Form
     {
-        public Customer Customer { get; set; }
+        public Customer Customer { get; private set; }
 
         public LoginForm() => InitializeComponent();
 
@@ -17,13 +17,8 @@ namespace CrmUI.Forms
         private void UserName_TextChanged(object sender, System.EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(UserName.Text))
-            {
-                ButtonEnter.Enabled = false;
-            }
-            else
-            {
-                ButtonEnter.Enabled = true;
-            }
+                ButtonEnter.Enabled = false;           
+            else ButtonEnter.Enabled = true;
         }
     }
 }

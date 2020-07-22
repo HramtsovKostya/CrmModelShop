@@ -45,9 +45,9 @@
             // 
             this.ButtonEnter.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.ButtonEnter.Enabled = false;
-            this.ButtonEnter.Location = new System.Drawing.Point(176, 215);
+            this.ButtonEnter.Location = new System.Drawing.Point(173, 210);
             this.ButtonEnter.Name = "ButtonEnter";
-            this.ButtonEnter.Size = new System.Drawing.Size(95, 32);
+            this.ButtonEnter.Size = new System.Drawing.Size(117, 37);
             this.ButtonEnter.TabIndex = 1;
             this.ButtonEnter.Text = "Войти";
             this.ButtonEnter.UseVisualStyleBackColor = true;
@@ -71,9 +71,13 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ButtonEnter);
             this.Controls.Add(this.UserName);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(476, 306);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(476, 306);
             this.Name = "LoginForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Login";
+            this.Text = "Авторизация";
             this.ResumeLayout(false);
             this.PerformLayout();
 

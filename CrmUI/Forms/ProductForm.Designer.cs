@@ -134,9 +134,13 @@
             this.Controls.Add(this.ButtonOK);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(476, 306);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(476, 306);
             this.Name = "ProductForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "ProductForm";
+            this.Text = "Добавление нового товара";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
