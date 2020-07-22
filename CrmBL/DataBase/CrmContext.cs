@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity;
 
-namespace CrmBL.Model
+namespace CrmBL.DataBase
 {
     public class CrmContext : DbContext
     {

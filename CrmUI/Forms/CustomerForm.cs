@@ -1,8 +1,8 @@
-﻿using CrmBL.Model;
+﻿using CrmBL.DataBase;
 using System;
 using System.Windows.Forms;
 
-namespace CrmUI
+namespace CrmUI.Forms
 {
     public partial class CustomerForm : Form
     {

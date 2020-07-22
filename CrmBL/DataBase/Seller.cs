@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CrmBL.Model
+namespace CrmBL.DataBase
 {
     public class Seller
     {

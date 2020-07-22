@@ -1,9 +1,9 @@
-﻿using CrmBL.Model;
+﻿using CrmBL.DataBase;
 using System;
 using System.Data.Entity;
 using System.Windows.Forms;
 
-namespace CrmUI
+namespace CrmUI.Forms
 {
     public partial class Catalog<T> : Form
         where T : class
@@ -21,6 +21,12 @@ namespace CrmUI
             
             dbSet.Load();
             dataGridView.DataSource = dbSet.Local.ToBindingList();
+
+            if (typeof(T) == typeof(Check))
+            {
+                ButtonAdd.Enabled = false;
+                ButtonEdit.Enabled = false;
+            }
         }
 
         private void ButtonAdd_Click

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CrmBL.DataBase;
+using System;
 using System.Collections.Generic;
 
 namespace CrmBL.Model

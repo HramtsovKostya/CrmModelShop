@@ -1,9 +1,10 @@
-﻿using CrmBL.Model;
+﻿using CrmBL.DataBase;
+using CrmBL.Model;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace CrmUI
+namespace CrmUI.Forms
 {
     public class CashBoxView
     {
@@ -80,7 +81,7 @@ namespace CrmUI
         private void CashDesk_CheckClosed(object sender, Check e)
         {
             FullPrice.Invoke((Action)delegate 
-            { 
+            {
                 FullPrice.Value += e.Price;
                 QueueLength.Value = cashDesk.Count;
                 LeaveCustomersCount.Text = cashDesk.ExitCustomer.ToString();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace CrmUI
+namespace CrmUI.Forms
 {
     static class Program
     {

@@ -1,4 +1,4 @@
-﻿namespace CrmUI
+﻿namespace CrmUI.Forms
 {
     partial class CustomerForm
     {

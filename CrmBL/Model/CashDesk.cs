@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CrmBL.DataBase;
+using System;
 using System.Collections.Generic;
 
 namespace CrmBL.Model
@@ -17,9 +18,10 @@ namespace CrmBL.Model
 
         public event EventHandler<Check> CheckClosed;
 
-        public CashDesk(int number, Seller seller)
+        public CashDesk(int number, Seller seller, CrmContext dbContext)
         {
-            dbContext = new CrmContext();
+            this.dbContext = dbContext ?? new CrmContext();
+
             Queue = new Queue<Cart>();            
             Number = number;
             Seller = seller;            
@@ -29,8 +31,7 @@ namespace CrmBL.Model
 
         public void Enqueue(Cart cart)
         {
-            if (Queue.Count <= MaxQueueLength)
-                Queue.Enqueue(cart);            
+            if (Queue.Count < MaxQueueLength) Queue.Enqueue(cart);            
             else ExitCustomer++;
         }
 

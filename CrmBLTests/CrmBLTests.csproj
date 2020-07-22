@@ -56,9 +56,9 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Model\CartTests.cs" />
-    <Compile Include="Model\CashDeskTests.cs" />
-    <Compile Include="Model\ShopComputerTests.cs" />
+    <Compile Include="Tests\CartTests.cs" />
+    <Compile Include="Tests\CashDeskTests.cs" />
+    <Compile Include="Tests\ShopModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,14 +4,16 @@ using System.Threading;
 namespace CrmBL.Model.Tests
 {
     [TestClass()]
-    public class ShopComputerTests
+    public class ShopModelTests
     {
         [TestMethod()]
-        public void ShopComputerTest()
+        public void ShopModelTest()
         {
-            var model = new ShopComputer();
+            var model = new ShopModel();
+
             model.Start();
             Thread.Sleep(10000);
+            model.Stop();
         }
     }
 }

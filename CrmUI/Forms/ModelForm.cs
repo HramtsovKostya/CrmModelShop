@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace CrmUI
+namespace CrmUI.Forms
 {
     public partial class ModelForm : Form
     {
-        private readonly ShopComputer model = new ShopComputer();
+        private readonly ShopModel model = new ShopModel();
 
         public ModelForm() => InitializeComponent();
 

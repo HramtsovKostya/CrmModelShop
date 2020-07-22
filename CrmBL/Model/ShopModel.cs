@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CrmBL.DataBase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -6,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace CrmBL.Model
 {
-    public class ShopComputer
+    public class ShopModel
     {
         private readonly Generator Generator = new Generator();
         private readonly Random rnd = new Random();
+        private readonly List<Task> tasks = new List<Task>();
         private bool isWorking = false;
 
         public List<CashDesk> CashDesks { get; set; } = new List<CashDesk>();
         public Queue<Seller> Sellers { get; set; } = new Queue<Seller>();
-        public int CustomerSpeed { get; set; } = 1000;
-        public int CashDeskSpeed { get; set; } = 1000;
+        public int CustomerSpeed { get; set; } = 100;
+        public int CashDeskSpeed { get; set; } = 100;
 
-        public ShopComputer()
+        public ShopModel()
         {
             Generator.GetNewSellers(20);
             Generator.GetNewProducts(1000);
@@ -27,7 +29,7 @@ namespace CrmBL.Model
 
             for (int i = 0; i < 3; i++)
             {
-                var cashDesk = new CashDesk(CashDesks.Count + 1, Sellers.Dequeue());
+                var cashDesk = new CashDesk(CashDesks.Count + 1, Sellers.Dequeue(), null);
                 CashDesks.Add(cashDesk);
             }
         }
@@ -35,29 +37,29 @@ namespace CrmBL.Model
         public void Start()
         {
             isWorking = true;
-            Task.Run(() => CreateCarts(10, CustomerSpeed));
 
-            var cashDeskTasks = CashDesks.Select(cashDesk => new Task(() 
-                => CashDeskWork(cashDesk, CashDeskSpeed)));
+            tasks.Add(new Task(() => CreateCarts(10)));
+            tasks.AddRange(CashDesks.Select(cashDesk => new Task(() 
+                => CashDeskWork(cashDesk))));
 
-            foreach (var task in cashDeskTasks) task.Start();
+            foreach (var task in tasks) task.Start();
         }
 
         public void Stop() => isWorking = false;
 
-        private void CashDeskWork(CashDesk cashDesk, int sleepTime)
+        private void CashDeskWork(CashDesk cashDesk)
         {
             while(isWorking)
             {
                 if (cashDesk.Count > 0)
                 {
                     cashDesk.Dequeue();
-                    Thread.Sleep(sleepTime);
+                    Thread.Sleep(CashDeskSpeed);
                 }
             }
         }
         
-        private void CreateCarts(int customerCounts, int sleepTime)
+        private void CreateCarts(int customerCounts)
         {
             while (isWorking)
             {
@@ -73,7 +75,7 @@ namespace CrmBL.Model
                     var cashDesk = CashDesks[rnd.Next(CashDesks.Count)];
                     cashDesk.Enqueue(cart);
                 }
-                Thread.Sleep(sleepTime);
+                Thread.Sleep(CustomerSpeed);
             }
         }
     }

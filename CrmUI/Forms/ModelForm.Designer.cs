@@ -1,4 +1,4 @@
-﻿namespace CrmUI
+﻿namespace CrmUI.Forms
 {
     partial class ModelForm
     {
@@ -29,11 +29,11 @@
             // 
             // ButtonStart
             // 
-            this.ButtonStart.Location = new System.Drawing.Point(671, 406);
+            this.ButtonStart.Location = new System.Drawing.Point(645, 405);
             this.ButtonStart.Name = "ButtonStart";
-            this.ButtonStart.Size = new System.Drawing.Size(117, 32);
+            this.ButtonStart.Size = new System.Drawing.Size(143, 33);
             this.ButtonStart.TabIndex = 0;
-            this.ButtonStart.Text = "Start";
+            this.ButtonStart.Text = "Старт";
             this.ButtonStart.UseVisualStyleBackColor = true;
             this.ButtonStart.Click += new System.EventHandler(this.ButtonStart_Click);
             // 

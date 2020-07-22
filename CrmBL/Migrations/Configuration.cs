@@ -1,12 +1,13 @@
 ﻿using System.Data.Entity.Migrations;
+using CrmBL.DataBase;
 
 namespace CrmBL.Migrations
 {
     internal sealed class Configuration
-        : DbMigrationsConfiguration<Model.CrmContext>
+        : DbMigrationsConfiguration<CrmContext>
     {
         public Configuration() => AutomaticMigrationsEnabled = true;
 
-        protected override void Seed(Model.CrmContext context) { }
+        protected override void Seed(CrmContext context) { }
     }
 }

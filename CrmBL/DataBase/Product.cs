@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CrmBL.Model
+namespace CrmBL.DataBase
 {
     public class Product
     {
@@ -10,7 +10,7 @@ namespace CrmBL.Model
         public int Count { get; set; }
         public virtual ICollection<Sell> Sells { get; set; }
 
-        public override string ToString() => Name;
+        public override string ToString() => $"{Name} - {Price} руб.";
 
         public override int GetHashCode() => ProductId;
 
